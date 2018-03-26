@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Hangman Game</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap 4 CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
@@ -14,35 +14,40 @@
 
 </head>
 
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-offset-2 col-md-8">
-                <div class="jumbotron">
-                    <h2>
-                        <span id="userGuess">
-                            <strong>Press "R", "P" or "S" to play!</strong>
-                        </span>
-                    </h2>
-                    <h2>
-                        <span id="compText"></span>
-                    </h2>
-                    <h2>
-                        <span id="winText"></span>
-                    </h2>
-                    <h2>
-                        <span id="lossText"></span>
-                    </h2>
-                    <h2>
-                        <span id="tieText"></span>
-                    </h2>
-                </div>
-            </div>
-        </div>
+<body class="text-center">
+
+    <!-- Main body of the site -->
+
+    <div class="jumbotron">
+        <h1 class="display-4">Hangman Game</h1>
+        <p class="lead">Press any letter to make a guess, you get a total of 10 guesses</p>
+        <hr class="my-4">
+        <p class="lead">
+            <span id="userText"></span>
+        </p>
+        <p class="lead">
+            <span id="guessText"></span>
+        </p>
+        <p class="lead">
+            <span id="wordMapText"></span>
+        </p>
+        <p class="lead">
+            <span id="compText"></span>
+        </p>
+        <p class="lead">
+            <span id="winText"></span>
+        </p>
+        <p class="lead">
+            <span id="lossText"></span>
+        </p>
+        <p class="lead">
+            <span id="gamesText"></span>
+        </p>
     </div>
 
 
 
+    <!-- Javascript file placed at the end of the document so the pages load faster -->
     <script src="assets/javascript/game.js"></script>
 </body>
 

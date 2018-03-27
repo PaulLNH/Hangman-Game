@@ -23,8 +23,14 @@ window.onload = function() {
     el.innerHTML = answerArray.join(" ");
 
     //Get a guess from player (keyUp)
-    var guess = prompt("Guess a letter or click Cancel to stop playing");
-    if (guess === null) {
+
+    document.onkeyup = function(event) {
+      if (count.guesses > 0) {
+        // Determines which key was pressed, and converts it to lowercase
+        var guess = event.key.toLowerCase();
+      }
+
+    if (guess === "escape") {
       //Exit game loop
       break;
     } else if (guess.length !== 1) {
@@ -41,6 +47,7 @@ window.onload = function() {
 
     //End of the game loop
   }
+}
 
   el.innerHTML = answerArray.join(" ");
   alert("Good job!! The answer was " + word + ".");

@@ -34,7 +34,10 @@ var words = [
   lives,
   category = "Wild West",
   guess,
-  letterGuessed = false;
+  letterGuessed = false,
+  winAudio = new Audio("../audio/win.wav"),
+  loseAudio = new Audio("../audio/lose.mp3"),
+  incorrectAudio = new Audio("../audio/incorrect.wav");
 
 // Reset
 function reset() {
@@ -43,7 +46,6 @@ function reset() {
 
   // Resetting the answer array
   answer = [];
-  console.log(word);
 
   // Adding the underscores to the answer array
   for (var i = 0; i < word.length; i++) {
@@ -109,7 +111,6 @@ function stats() {
 
 // Game logic runs on key up event
 document.onkeyup = function(event) {
-  console.log(guessedArr);
   // Converts our guess to lowercase
   guess = event.key.toLowerCase();
 
@@ -133,11 +134,11 @@ document.onkeyup = function(event) {
             // If a match is found apply that correct guess to the answer aray
             answer[i] = guess;
             remainingLetters--;
-            console.log(remainingLetters);
           }
         }
         if (remainingLetters <= 0) {
           // WIN CONDITION
+          winAudio.play();
           wins++;
           stats();
           alert("Congratulations, you won! The word was: " + word + ".");
@@ -145,12 +146,14 @@ document.onkeyup = function(event) {
         }
       } else if (lives <= 0) {
         // LOSS CONDITION
+        lossAudio.play();
         losses++;
         stats();
         alert("Sorry, you lose! The word was: " + word + ".");
         reset();
       } else {
         // Users guess was incorrect
+        incorrectAudio.play();
         lives--;
         // Display starting instructions to user
         document.getElementById("statusText").style.color = "rgb(100, 0, 0)";
@@ -176,5 +179,3 @@ document.onkeyup = function(event) {
 // Function calls
 reset();
 stats();
-
-console.log(answer);

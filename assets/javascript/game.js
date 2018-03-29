@@ -33,11 +33,7 @@ var words = [
   losses = 0,
   lives,
   category = "Wild West",
-  guess,
-  letterGuessed = false,
-  winAudio = new Audio("../audio/win.wav"),
-  loseAudio = new Audio("../audio/lose.mp3"),
-  incorrectAudio = new Audio("../audio/incorrect.wav");
+  guess;
 
 // Reset
 function reset() {
@@ -138,7 +134,6 @@ document.onkeyup = function(event) {
         }
         if (remainingLetters <= 0) {
           // WIN CONDITION
-          winAudio.play();
           wins++;
           stats();
           alert("Congratulations, you won! The word was: " + word + ".");
@@ -146,14 +141,12 @@ document.onkeyup = function(event) {
         }
       } else if (lives <= 0) {
         // LOSS CONDITION
-        lossAudio.play();
         losses++;
         stats();
         alert("Sorry, you lose! The word was: " + word + ".");
         reset();
       } else {
         // Users guess was incorrect
-        incorrectAudio.play();
         lives--;
         // Display starting instructions to user
         document.getElementById("statusText").style.color = "rgb(100, 0, 0)";

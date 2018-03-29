@@ -1,170 +1,180 @@
-window.onload = function() {
-  debugger; // Remove this
+var words = [
+    "bandana",
+    "britches",
+    "cahoots",
+    "campfires",
+    "cavalry",
+    "chaps",
+    "courageous",
+    "cowboy",
+    "desperado",
+    "frontier",
+    "giddyup",
+    "gold fever",
+    "gunslinger",
+    "horse",
+    "howdy",
+    "indians",
+    "invasion",
+    "jail",
+    "justice",
+    "leather",
+    "livestock",
+    "longhorns",
+    "maverick",
+    "outlaw"
+  ],
+  word,
+  guessedArr = [],
+  answer = [],
+  initialGuess = true,
+  remainingLetters,
+  wins = 0,
+  losses = 0,
+  lives,
+  category = "Wild West",
+  guess,
+  letterGuessed = false;
 
-  // Holds all word related data
-  var word = {
-      // Creates an array of possible words
-      bank: [
-        "bandana",
-        "britches",
-        "cahoots",
-        "campfires",
-        "cavalry",
-        "chaps",
-        "courageous",
-        "cowboy",
-        "desperado",
-        "frontier",
-        "giddyup",
-        "gold fever",
-        "gunslinger",
-        "horse",
-        "howdy",
-        "indians",
-        "invasion",
-        "jail",
-        "justice",
-        "leather",
-        "livestock",
-        "longhorns",
-        "maverick",
-        "outlaw"
-      ],
-      //   Array of possibly guesses
-      letters: [
-        "a",
-        "b",
-        "c",
-        "d",
-        "e",
-        "f",
-        "g",
-        "h",
-        "i",
-        "j",
-        "k",
-        "l",
-        "m",
-        "n",
-        "o",
-        "p",
-        "q",
-        "r",
-        "s",
-        "t",
-        "u",
-        "v",
-        "w",
-        "x",
-        "y",
-        "z"
-      ],
-      guessed: [], // Array of foundLetter
-      map: [] // Dynamic array of the currentWord guesses
-    },
-    user = {
-      guess: "" // User keyed guess goes here
-    },
-    // COUNTERS
-    count = {
-      guesses: 10, // Guesses remaining
-      wins: 0, // Number of wins
-      losses: 0 // Number of losses
-    },
-    guess;
+// Reset
+function reset() {
+  // Selecting a random word from the words array and passing it onto the word variable
+  word = words[Math.floor(Math.random() * words.length)];
 
-  //   Randomly select a word form the word abnk
-  var currentWord = word.bank[Math.floor(Math.random() * word.bank.length)];
+  // Resetting the answer array
+  answer = [];
+  console.log(word);
 
-  //   Display out all the letters of the alphabet
-  var alphabet = function() {
-    // allows us to interact with the html
-    lettersArray = document.getElementById("lettersRemaining");
-    letterList = document.createElement("ul");
-
-    // Clycle through A to Z
-    for (var i = 0; i < word.letters.length; i++) {
-      letterList.id = "word.letters";
-      list = document.createElement("li");
-      list.id = "letter";
-      list.innerHTML = word.letters[i];
-      lettersArray.appendChild(letterList);
-      letterList.appendChild(list);
-    }
-  };
-
-  // Adding the wordMap spaces
-  for (var i = 0; i < currentWord.length; i++) {
-    // Add blank spaces for each character in currentWord to the wordMap array
-    word.map.push(" _");
+  // Adding the underscores to the answer array
+  for (var i = 0; i < word.length; i++) {
+    // Add blank spaces for each character in word to the answer array
+    answer.push("_");
   }
 
-  // Remove duplicate entries fron an array
-  Array.prototype.unique = function() {
-    return this.filter(function(value, index, self) {
-      return self.indexOf(value) === index;
-    });
-  };
+  // Clear out the guesses array
+  guessedArr = [
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z"
+  ];
+  // Resetting the guessed letter to an empty string
+  guess = "";
+  // Tell the game logic to stop running
+  gameOver = true;
+  // Assign a string to remaining letters
+  remainingLetters = word.length;
+  // Reset lives
+  lives = 12;
+  // Display starting instructions to user
+  document.getElementById("statusText").style.color = "white";
+  document.getElementById("statusText").innerHTML =
+    "Press any letter to make your first guess.";
+}
 
-  // On key up function (runs code for each time a key is pressed)
-  document.onkeyup = function(event) {
-    if (count.guesses > 0) {
-      // Determines which key was pressed, and converts it to lowercase
-      var keyedGuess = event.key;
-      user.guess = keyedGuess.toLowerCase();
+// Constantly display updated status
+function stats() {
+  // Displays the answer progress
+  document.getElementById("guessText").innerHTML = answer.join(" ");
+  // Displays current category
+  document.getElementById("categoryText").innerHTML = category;
+  // Displays wins
+  document.getElementById("winsText").innerHTML = wins;
+  // Displays losses
+  document.getElementById("lossesText").innerHTML = losses;
+  // Displays lives remaining
+  document.getElementById("livesText").innerHTML = lives;
+}
 
-      // Clycle through the currentWord
-      for (var i = 0; i < currentWord.length; i++) {
-        // Removes guess form the letter array
-        delete word.letters[word.letters.indexOf(user.guess)];
-        // Check to see if the userGuess is a match to any of the ltters in currentWord
-        if (user.guess === currentWord.charAt(i)) {
-          // if match is found, add it to the guessed letter array
-          word.guessed.push(user.guess);
-          // Adds the correct guess to the wordMap array and overwrites the underscore
-          word.map.splice(i, 1, user.guess);
+// Game logic runs on key up event
+document.onkeyup = function(event) {
+  console.log(guessedArr);
+  // Converts our guess to lowercase
+  guess = event.key.toLowerCase();
+
+  // Always displaying stats
+  stats();
+
+  // Display starting instructions to user
+  document.getElementById("statusText").style.color = "white";
+  document.getElementById("statusText").innerHTML = "";
+
+  // Check to see if the guess is a letter
+  if (event.keyCode >= 65 && event.keyCode <= 90) {
+    // Ensures that the guess is part of the avaiableGuess array
+    if (guessedArr.indexOf(guess) > -1) {
+      // Remove the guess from the array
+      guessedArr.splice(guessedArr.indexOf(guess), 1, "");
+      if (word.indexOf(guess) > -1 && lives > 0) {
+        for (var i = 0; i < word.length; i++) {
+          // Check the guess against the word index
+          if (word[i] === guess) {
+            // If a match is found apply that correct guess to the answer aray
+            answer[i] = guess;
+            remainingLetters--;
+            console.log(remainingLetters);
+          }
         }
-      }
-
-      // reassigns the foundLetter array into a unique array
-      // unique = word.guessed.unique();
-      // bad = badWordMap.unique().join();
-
-      // Win Condition
-      if (word.map.join("") === currentWord) {
-        count.wins++;
-        document.getElementById("winText").innerHTML = "Wins: " + count.wins;
-        alert("Congratulations! You won, partner.");
-
-        // Check to see if any guesses left
-
-        // Grab the span ID's and prints data to page
-        document.getElementById("userText").innerHTML =
-          "You chose: " + user.guess;
-        document.getElementById("guessText").innerHTML =
-          "Guesses remaining: " + count.guesses;
-        document.getElementById("compText").innerHTML =
-          "The current word is: " + currentWord;
-        document.getElementById("wordMapText").innerHTML = word.map.join("");
+        if (remainingLetters <= 0) {
+          // WIN CONDITION
+          wins++;
+          stats();
+          alert("Congratulations, you won! The word was: " + word + ".");
+          reset();
+        }
+      } else if (lives <= 0) {
+        // LOSS CONDITION
+        losses++;
+        stats();
+        alert("Sorry, you lose! The word was: " + word + ".");
+        reset();
       } else {
-        count.losses++;
-        document.getElementById("lossText").innerHTML =
-          "Losses: " + count.losses;
-        alert("\"Life is hard. It's harder if you're stupid.\" - John Wayne");
+        // Users guess was incorrect
+        lives--;
+        // Display starting instructions to user
+        document.getElementById("statusText").style.color = "rgb(100, 0, 0)";
+        document.getElementById("statusText").innerHTML =
+          'Sorry "' + guess + '" was not in the word.';
       }
-
-      // removes a guess from your total
-      count.guesses = count.guesses--;
-
-      // Display the letters remaining
-      alphabet();
     } else {
-      document.getElementById("userText").innerHTML = "PRESS ANY KEY TO START!";
+      // User did not guess a letter
+      document.getElementById("statusText").style.color = "rgb(100, 0, 0)";
+      document.getElementById("statusText").innerHTML =
+        'You alraedy guessed "' + guess + '", try another guess.';
     }
-  };
 
-  document.getElementById("compText").innerHTML = "The current word is: ";
-  document.getElementById("wordMapText").innerHTML = word.map.join("");
-  document.getElementById("winText").innerHTML = "Wins: " + count.wins;
-  document.getElementById("lossText").innerHTML = "Losses: " + count.losses;
+    stats();
+  } else {
+    // User did not guess a letter
+    document.getElementById("statusText").style.color = "rgb(100, 0, 0)";
+    document.getElementById("statusText").innerHTML =
+      '"' + guess + '" is not a letter, try another guess.';
+  }
 };
+
+// Function calls
+reset();
+stats();
+
+console.log(answer);

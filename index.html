@@ -6,6 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Hangman Game</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Yatra+One" rel="stylesheet">
     <!-- Bootstrap 4 CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
@@ -14,38 +17,88 @@
 
 </head>
 
-<body class="text-center">
+<body class="">
 
     <!-- Main body of the site -->
-
     <div class="jumbotron">
-        <h1 class="display-4">Hangman Game</h1>
-        <p class="lead">Press any letter to make a guess, you get a total of 10 guesses</p>
+        <!-- Title -->
+        <h1 class="display-4 text-center">Hangman</h1>
+        <!-- Subtitle -->
+        <p class="lead gallows text-center">Welcome to the gallows...</p>
+        <!-- Horizontial line to break up page -->
         <hr class="my-4">
-        <p class="lead">
-            <span id="lettersRemaining"></span>
-        </p>
-        <p class="lead">
-            <span id="userText"></span>
-        </p>
-        <p class="lead">
-            <span id="guessText"></span>
-        </p>
-        <p class="lead">
-            <span id="wordMapText"></span>
-        </p>
-        <p class="lead">
-            <span id="compText"></span>
-        </p>
-        <p class="lead">
-            <span id="winText"></span>
-        </p>
-        <p class="lead">
-            <span id="lossText"></span>
-        </p>
-        <p class="lead">
-            <span id="gamesText"></span>
-        </p>
+
+        <!-- Start of first row -->
+        <div class="row">
+            <div class="col-md-2"></div>
+            <!-- First column: Labels -->
+            <div class="col-md-4 text-right">
+                <!-- Line one: Category -->
+                <p class="lead">Word Category:</p>
+                <!-- Line two: lives (guesses) remaining -->
+                <p class="lead">Wins:</p>
+                <!-- Line three: Wins -->
+                <p class="lead">Losses:</p>
+                <!-- Line three: Losses -->
+                <p class="lead">Lives remaining:</p>
+                <p class="lead">
+                    <span id="compText"></span>
+                </p>
+                <p class="lead">
+                    <span id="winText"></span>
+                </p>
+                <p class="lead">
+                    <span id="lossText"></span>
+                </p>
+                <p class="lead">
+                    <span id="gamesText"></span>
+                </p>
+            </div>
+            <!-- Second column: Data -->
+            <div class="col-md-4">
+                <!-- Line one: Category -->
+                <p class="lead">
+                    <span id="categoryText"></span>
+                </p>
+                <!-- Line two: wins (guesses) remaining -->
+                <p class="lead">
+                    <span id="winsText"></span>
+                </p>
+                <!-- Line three: losses -->
+                <p class="lead">
+                    <span id="lossesText"></span>
+                </p>
+                <!-- Line three: lives -->
+                <p class="lead">
+                    <span id="livesText"></span>
+                </p>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <!-- First row ends -->
+
+        <!-- Start of second row -->
+        <div class="row">
+            <!-- Set the column to 12 units wide (screen width) -->
+            <div class="col-md-12">
+                <!-- center the text -->
+                <p class="text-center">
+                    <!-- id for the start prompt and answer key  -->
+                    <span id="guessText"></span>
+                </p>
+
+                <!-- Horizontial line to break up page -->
+                <hr class="my-4">
+
+                <!-- center the text -->
+                <p class="text-center">
+                    <!-- id for the start prompt and answer key  -->
+                    <span id="statusText"></span>
+                </p>
+            </div>
+        </div>
+        <!-- second row ends -->
+
     </div>
 
 

@@ -1,0 +1,18 @@
+h1 {
+    color: black;
+    font-family: 'Bowlby One SC', cursive;
+}
+
+.gallows {
+    color: black;
+    font-family: 'Yatra One', cursive;
+}
+
+p {
+    color: black;
+}
+
+#statusText {
+    font-size: 2em;
+    font-weight: bold;
+}

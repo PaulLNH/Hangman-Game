@@ -34,6 +34,13 @@ var words = [
   lives,
   category = "Wild West",
   guess;
+// Audio
+var soundWin = document.createElement("audio");
+soundWin.setAttribute("src", "./assets/audio/win.wav");
+var soundLoss = document.createElement("audio");
+soundLoss.setAttribute("src", "./assets/audio/lose.mp3");
+var soundWrong = document.createElement("audio");
+soundWrong.setAttribute("src", "./assets/audio/incorrect.wav");
 
 // Reset
 function reset() {
@@ -134,6 +141,7 @@ document.onkeyup = function(event) {
         }
         if (remainingLetters <= 0) {
           // WIN CONDITION
+          soundWin.play();
           wins++;
           stats();
           alert("Congratulations, you won! The word was: " + word + ".");
@@ -141,12 +149,14 @@ document.onkeyup = function(event) {
         }
       } else if (lives <= 0) {
         // LOSS CONDITION
+        soundLoss.play();
         losses++;
         stats();
         alert("Sorry, you lose! The word was: " + word + ".");
         reset();
       } else {
         // Users guess was incorrect
+        soundWrong.play();
         lives--;
         // Display starting instructions to user
         document.getElementById("statusText").style.color = "rgb(100, 0, 0)";
